@@ -33,7 +33,7 @@
                             <br>
                             <br>
                             <label for="m_pejabat_id">Jabatan:</label>
-                            <select class="form-control" name="m_pejabat_id" class="js-example-basic-single">
+                            <select class="js-example-basic-single form-control" name="m_pejabat_id" >
                                 <?php foreach ($pejabat_options as $master_pejabat): ?>
                                     <option value="<?= $master_pejabat->id ?>" <?= ($master_pejabat->id == $pejabat->m_pejabat_id) ? 'selected' : '' ?>>
                                         <?= $master_pejabat->nama ?>
@@ -55,6 +55,22 @@
 
         </div>
     </main>
+
+<!-- jQuery -->
+<script src="<?php echo base_url('vendor/jquery/jquery.min.js') ?>" ></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo base_url('vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="<?php echo base_url('vendor/metisMenu/metisMenu.min.js') ?>"></script>
+
+<!-- Morris Charts JavaScript -->
+<script src="<?php echo base_url('vendor/raphael/raphael.min.js') ?>"></script>
+<script src="<?php echo base_url('vendor/morrisjs/morris.min.js') ?>"></script>
+<script src="<?php echo base_url('data/morris-data.js') ?>"></script>
+
+<!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url('vendor/select2/dist/js/select2.min.js'); ?>"></script>
 
 <script>

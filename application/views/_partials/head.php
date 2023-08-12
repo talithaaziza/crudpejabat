@@ -11,9 +11,6 @@
 
     <title>Talitha - CRUD CI</title>
 
-    <!-- select2 -->
-    <link href="<?php echo base_url('vendor/select2/dist/css/select2.min.css') ?>" rel="stylesheet" />
-
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('vendor/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
 
@@ -35,6 +32,11 @@
 
     <!-- Custom Fonts -->
     <link href="<?php echo base_url('vendor/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css">
+
+    <!-- Select -->
+
+    <link rel="stylesheet" href="<?php echo base_url('vendor/select2/dist/css/select2.min.css') ?>">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
