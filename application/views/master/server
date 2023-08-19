@@ -3,6 +3,7 @@
 <head>
     <?php $this->load->view('_partials/head.php') ?>
     <title>Daftar Pejabat</title>
+    
 </head>
 <body>
 <main class="main">
@@ -38,7 +39,7 @@
                             <?php endif; ?>
                             <br>
 
-                            <table class="table table-striped" id="master">
+                            <table class="table table-striped" id="table">
                                 <thead>
 
                                     <tr>
@@ -46,7 +47,7 @@
                                         <th>Nama</th>
                                         <th>Tanggal Buat</th>
                                         <th>Tanggal Ubah</th>
-                                        <th>Aksi</th>
+                                        <!-- <th>Aksi</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,58 +74,47 @@
             </div>		
 	</main>
 <!-- jQuery -->
-<script src="<?php echo base_url('vendor/jquery/jquery.min.js') ?>" ></script>
+    <script src="<?php echo base_url('vendor/jquery/jquery.min.js') ?>" ></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="<?php echo base_url('vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo base_url('vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
 
-<!-- Metis Menu Plugin JavaScript -->
-<script src="<?php echo base_url('vendor/metisMenu/metisMenu.min.js') ?>"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="<?php echo base_url('vendor/metisMenu/metisMenu.min.js') ?>"></script>
 
-<!-- Morris Charts JavaScript -->
-<script src="<?php echo base_url('vendor/raphael/raphael.min.js') ?>"></script>
-<script src="<?php echo base_url('vendor/morrisjs/morris.min.js') ?>"></script>
-<script src="<?php echo base_url('data/morris-data.js') ?>"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="<?php echo base_url('vendor/raphael/raphael.min.js') ?>"></script>
+    <script src="<?php echo base_url('vendor/morrisjs/morris.min.js') ?>"></script>
+    <script src="<?php echo base_url('data/morris-data.js') ?>"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="<?php echo base_url('dist/js/sb-admin-2.js') ?>"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="<?php echo base_url('dist/js/sb-admin-2.js') ?>"></script>
 
-<!-- DataTables JavaScript -->
-<script src="<?php echo base_url('vendor/datatables/js/jquery.dataTables.min.js') ?>" ></script>
-<script src= "<?php echo base_url('vendor/datatables-plugins/dataTables.bootstrap.min.js') ?>" ></script>
-<script src="<?php echo base_url('vendor/datatables-responsive/dataTables.responsive.js') ?>" ></script>
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo base_url('vendor/datatables/js/jquery.dataTables.min.js') ?>" ></script>
+    <script src="<?php echo base_url('vendor/datatables-plugins/dataTables.bootstrap.min.js') ?>"  ></script>
+    <script src="<?php echo base_url('vendor/datatables-responsive/dataTables.responsive.js') ?>"  ></script>
 
-<script>
+
+    <script>
         $(document).ready(function() {
-            $('#master').DataTable({
+            $('#table').DataTable({
                 "processing": true,
                 "serverSide": true,
 
                 "order": [], 
                 "ajax": {
-                    "url": "<?php echo site_url('MasterPejabat/get_data'); ?>",
+                    "url": "<?php echo site_url('masterpejabat/get_data'); ?>",
                     "type": "POST"
                 },
                 "columns": [
 
                         {"data": null,width: 30}, 
+                        {"data": "id",width:30},
                         {"data": "nama",width:200},
                         {"data": "tglBuat",width:150},
                         {"data": "tglUbah",width:150},
-                        {
-                            "data": null,
-                            "width": 100,
-                            "orderable": false,
-                            "render": function(data, type, row) {
-                                var editUrl = "<?php echo site_url('masterpejabat/edit'); ?>/" + row.id;
-                                var deleteUrl = "<?php echo site_url('masterpejabat/delete'); ?>/" + row.id;
-
-                                return '<a href="' + editUrl + '" class="btn btn-warning btn-sm">Edit</a>' +
-                                        ' ' +
-                                    '<a href="' + deleteUrl + '" class="btn btn-danger btn-sm" onclick="return confirmDelete()">Delete</a>';
-
-                            }
-                        }
+                      
                 ],
                 "createdRow": function(row, data, index) {
                 $('td', row).eq(0).html(index + 1);
@@ -134,13 +124,15 @@
         });
     </script>
 
-<script>
+    <script>
         function confirmDelete() {
     return confirm('Apakah Anda yakin ingin menghapus data ini?');
 }
     </script>
 
+
 </body>
 </html>
+
 
 

@@ -9,15 +9,29 @@ class Pejabat extends CI_Controller {
     }
 
     public function index() {
-        $search = $this->input->get('search');
-        if (!empty($search)) {
-            $data['pejabat'] = $this->M_Pejabat->search_data($search);
-        }else {
-            $data['pejabat'] = $this->M_Pejabat->getAllPejabat();
-        }
 
-        $this->load->view('pejabat/index', $data);
+        $this->load->view('pejabat/index');
 
+    }
+
+    public function get_data() {
+        $draw = $this->input->post('draw');
+        $start = $this->input->post('start');
+        $length = $this->input->post('length');
+        $search = $this->input->post('search')['value'];
+
+        $recordsTotal = $this->M_Pejabat->get_total_records();
+        $recordsFiltered = $this->M_Pejabat->get_filtered_records($search);
+        $data = $this->M_Pejabat->get_data($start, $length, $search); 
+
+        $response = array(
+            "draw" => intval($draw),
+            "recordsTotal" => $recordsTotal,
+            "recordsFiltered" => $recordsFiltered,
+            "data" => $data
+        );
+
+        echo json_encode($response);
     }
 
     public function create() {

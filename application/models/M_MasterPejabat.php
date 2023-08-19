@@ -5,6 +5,29 @@ class M_MasterPejabat extends CI_Model {
         return $this->db->get('master_pejabat')->result();
     }
 
+
+    public function get_data($start, $length, $search) {
+        $this->db->select('*');
+        $this->db->from('master_pejabat');
+        if (!empty($search)) {
+            $this->db->like('nama', $search); 
+        }
+            $this->db->order_by('id', 'asc'); 
+            $this->db->limit($length, $start);
+            return $this->db->get()->result();
+    }
+
+
+    public function get_total_records() {
+        return $this->db->count_all('master_pejabat');
+    }
+
+    public function get_filtered_records($search) {
+        $this->db->like('nama', $search); // kolom yang ingin Anda cari
+        return $this->db->get('master_pejabat')->num_rows();
+    }
+
+
     public function insertPejabat($data) {
         return $this->db->insert('master_pejabat', $data);
     }

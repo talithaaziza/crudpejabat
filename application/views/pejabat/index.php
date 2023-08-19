@@ -39,7 +39,7 @@
                                 </div>
                             <?php endif; ?>
                             <br>
-                        <table class="table table-striped" id="dataTables-example">
+                        <table class="table table-striped" id="pejabat">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -52,27 +52,9 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <?php $no = 0;
-                            foreach ($pejabat as $row){
-                                $no = $no + 1;
-                            ?>
-                            <tr>
-                                <td><?php echo $no ?></td>
-                                <td><?= $row->nama_pejabat ?></td>
-                                <td><?= $row->jenis_kelamin ?></td>
-                                <td><?= $row->alamat ?></td>
-                                <td><?= $row->master_pejabat_name ?></td>
-                                <td><?= $row->tglBuat ?></td>
-                                <td><?= $row->tglUbah ?></td>
-                                <td>
-                                    <div class="action">
-                                        <a href="<?= site_url('pejabat/edit/' . $row->id) ?>" class="btn btn-success" class="button button-small " role="button">Edit</a>
-                                        <a href="<?= site_url('pejabat/delete/' . $row->id) ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
-                                        class="btn btn-small btn-danger" role="button">Hapus</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php } ?>
+                            <tbody>
+
+                            </tbody>
                         </table>
                                         </div>
                                     </div>
@@ -111,18 +93,59 @@
 <script src="<?php echo base_url('dist/js/sb-admin-2.js') ?>"></script>
 
 <!-- DataTables JavaScript -->
-<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+<script src="<?php echo base_url('vendor/datatables/js/jquery.dataTables.min.js') ?>" ></script>
+<script src="<?php echo base_url('vendor/datatables-plugins/dataTables.bootstrap.min.js') ?>"  ></script>
+<script src="<?php echo base_url('vendor/datatables-responsive/dataTables.responsive.js') ?>"  ></script>
 
 <script>
-$(document).ready(function() {
-    $('#dataTables-example').DataTable({
-        responsive: true
-        
+    $(document).ready(function() {
+        $('#pejabat').DataTable({
+            "processing": true,
+            "serverSide": true,
+
+            "order": [], 
+            "ajax": {
+                "url": "<?php echo site_url('Pejabat/get_data'); ?>",
+                "type": "POST"
+            },
+            "columns": [
+
+                {"data": null,width: 10}, // Add row_number column
+                    {"data": "nama_pejabat",width:100},
+                    {"data": "jenis_kelamin",width:10},
+                    {"data": "alamat",width:100},
+                    {"data": "nama_master",width:50},
+                    {"data": "tglBuat",width:100},
+                    {"data": "tglUbah",width:100},
+                    {
+                        "data": null,
+                        "width": 100,
+                        "orderable": false,
+                        "render": function(data, type, row) {
+                            var editUrl = "<?php echo site_url('pejabat/edit'); ?>/" + row.id;
+                            var deleteUrl = "<?php echo site_url('pejabat/delete'); ?>/" + row.id;
+
+                            return '<a href="' + editUrl + '" class="btn btn-warning btn-sm">Edit</a>' +
+                                    ' ' +
+                                   '<a href="' + deleteUrl + '" class="btn btn-danger btn-sm ml-2" onclick="return confirmDelete()">Delete</a>';
+
+                        }
+                    }
+            ],
+            "createdRow": function(row, data, index) {
+            $('td', row).eq(0).html(index + 1);
+        }
+            
+        });
     });
-});
 </script>
+
+<script>
+    function confirmDelete() {
+return confirm('Apakah Anda yakin ingin menghapus data ini?');
+}
+</script>
+
 
 </body>
 </html>
