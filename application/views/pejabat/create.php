@@ -53,8 +53,8 @@
         </div>
     </main>
 
-<!-- jQuery -->
-<script src="<?php echo base_url('vendor/jquery/jquery.min.js') ?>" ></script>
+ <!-- jQuery -->
+ <script src="<?php echo base_url('vendor/jquery/jquery.min.js') ?>" ></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="<?php echo base_url('vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
@@ -72,32 +72,35 @@
 
 <script src="<?php echo base_url('vendor/select2/dist/js/select2.min.js'); ?>"></script>
 
-
 <script>
-$(document).ready(function() {
-$('#m_pejabat_id').select2({
-    ajax: {
-        url: '<?php echo site_url('pejabat/search_pejabat'); ?>', //diisi nama controller dan fungsinya
-        dataType: 'json',
-        delay: 250,
-        data: function(params) {
-            return {
-                q: params.term // Parameter pencarian, parameter yang dibikin di fungsi controller
-            };
-        },
-        processResults: function(data) {
-            return {
-                results: data
-            };
-        },
-        cache: true
-    },
-    minimumInputLength: 0
-});
-});
+    $(document).ready(function() {
+        $('#m_pejabat_id').select2({
+                ajax: {
+                    url: '<?= site_url('pejabat/select_data') ?>',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            page: params.page || 1
+                        };
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
 
+                        return {
+                            results: data.results,
+                            pagination: {                    
+                            more: data.pagination.more
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 0
+            });
+    });
 </script>
-
 
 </body>
 </html>

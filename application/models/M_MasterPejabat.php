@@ -61,5 +61,27 @@ class M_MasterPejabat extends CI_Model {
 
         return $query->result(); 
     }
+
+    public function get_data_paginated($search, $page, $page_limit) {
+        $offset = ($page - 1) * $page_limit;
+
+        $this->db->select('id, nama'); // Sesuaikan kolom yang ingin diambil
+        $this->db->from('master_pejabat'); // Ganti dengan nama tabel yang sesuai
+        if ($search) {
+            $this->db->like('nama', $search); // Gunakan kriteria pencarian
+        }
+        $this->db->limit($page_limit, $offset);
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_total_count($search) {
+        $this->db->from('master_pejabat'); // Ganti dengan nama tabel yang sesuai
+        if ($search) {
+            $this->db->like('nama', $search); // Gunakan kriteria pencarian
+        }
+        return $this->db->count_all_results();
+    }
 }
 ?>
