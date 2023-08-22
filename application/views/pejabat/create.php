@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/js/select2.min.js"></script>
     <?php $this->load->view('_partials/head.php') ?>
     <title>Tambah Pejabat</title>
 </head>
@@ -34,11 +36,8 @@
                             <input class="form-control" type="text" name="alamat" required>
                             <br>
                             <label for="m_pejabat_id">Pilih Pejabat:</label>
-                            <select class="js-example-basic-single form-control" name="m_pejabat_id" >
-                            <option value="">--Pilih Jabatan--</option>
-                                <?php foreach ($pejabat_options as $pejabat) { ?>
-                                    <option value="<?php echo $pejabat->id; ?>"><?php echo $pejabat->nama; ?></option>
-                                 <?php } ?>
+                            <select class="form-control" name="m_pejabat_id" id="m_pejabat_id">
+                                <option value="">Pilih Nama Jabatan</option>
                             </select>
                             <br>
                             <br>
@@ -73,11 +72,32 @@
 
 <script src="<?php echo base_url('vendor/select2/dist/js/select2.min.js'); ?>"></script>
 
+
 <script>
-    $(document).ready(function() {
-        $('.js-example-basic-single').select2();
-    });
+$(document).ready(function() {
+$('#m_pejabat_id').select2({
+    ajax: {
+        url: '<?php echo site_url('pejabat/search_pejabat'); ?>', //diisi nama controller dan fungsinya
+        dataType: 'json',
+        delay: 250,
+        data: function(params) {
+            return {
+                q: params.term // Parameter pencarian, parameter yang dibikin di fungsi controller
+            };
+        },
+        processResults: function(data) {
+            return {
+                results: data
+            };
+        },
+        cache: true
+    },
+    minimumInputLength: 0
+});
+});
+
 </script>
+
 
 </body>
 </html>

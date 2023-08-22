@@ -5,6 +5,7 @@ class Pejabat extends CI_Controller {
         parent::__construct();
         $this->load->model('M_Pejabat');
         // $this->load->model('M_MasterPejabat');
+        // $this->load->database(); // Load database library
 
     }
 
@@ -31,6 +32,24 @@ class Pejabat extends CI_Controller {
             "data" => $data
         );
 
+        echo json_encode($response);
+    }
+
+    public function search_pejabat() //fungsi untuk JSON pada create dan edit data pejabat bagian input jabatan
+    {
+        $search_query = $this->input->get('q'); //parameter yang mau diambil bisa diisi bebas
+    
+        $this->load->model('M_MasterPejabat');
+        $pejabat_data = $this->M_MasterPejabat->search_pejabat($search_query); 
+    
+        $response = array();
+        foreach ($pejabat_data as $pejabat) {
+            $response[] = array(
+                'id' => $pejabat->id, 
+                'text' => $pejabat->nama, //kolom data yang akan diambil
+            );
+        }
+    
         echo json_encode($response);
     }
 

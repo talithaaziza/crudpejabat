@@ -33,12 +33,8 @@
                             <br>
                             <br>
                             <label for="m_pejabat_id">Jabatan:</label>
-                            <select class="js-example-basic-single form-control" name="m_pejabat_id" >
-                                <?php foreach ($pejabat_options as $master_pejabat): ?>
-                                    <option value="<?= $master_pejabat->id ?>" <?= ($master_pejabat->id == $pejabat->m_pejabat_id) ? 'selected' : '' ?>>
-                                        <?= $master_pejabat->nama ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <select class="form-control" name="m_pejabat_id" id="m_pejabat_id">
+                                <option value="">Pilih Nama Jabatan</option>
                             </select>
 
                             <br><br>
@@ -56,7 +52,7 @@
         </div>
     </main>
 
-<!-- jQuery -->
+    <!-- jQuery -->
 <script src="<?php echo base_url('vendor/jquery/jquery.min.js') ?>" ></script>
 
 <!-- Bootstrap Core JavaScript -->
@@ -71,12 +67,34 @@
 <script src="<?php echo base_url('data/morris-data.js') ?>"></script>
 
 <!-- Custom Theme JavaScript -->
-    <script src="<?php echo base_url('vendor/select2/dist/js/select2.min.js'); ?>"></script>
+<script src="<?php echo base_url('dist/js/sb-admin-2.js') ?>"></script>
+
+<script src="<?php echo base_url('vendor/select2/dist/js/select2.min.js'); ?>"></script>
+
 
 <script>
-    $(document).ready(function() {
-        $('.js-example-basic-single').select2();
-    });
+$(document).ready(function() {
+$('#m_pejabat_id').select2({
+    ajax: {
+        url: '<?php echo site_url('pejabat/search_pejabat'); ?>', //diisi nama controller dan fungsinya
+        dataType: 'json',
+        delay: 250,
+        data: function(params) {
+            return {
+                q: params.term // Parameter pencarian, parameter yang dibikin di fungsi controller
+            };
+        },
+        processResults: function(data) {
+            return {
+                results: data
+            };
+        },
+        cache: true
+    },
+    minimumInputLength: 0
+});
+});
+
 </script>
 
 </body>

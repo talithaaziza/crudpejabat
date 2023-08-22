@@ -52,10 +52,14 @@ class M_MasterPejabat extends CI_Model {
         return $query->result();
     }
 
-    public function search_data($search) {
-        $this->db->like('nama', $search); // Ganti 'field_name' dengan nama kolom yang ingin Anda cari
-        $query = $this->db->get('master_pejabat'); // Ganti 'table_name' dengan nama tabel yang ingin Anda cari
-        return $query->result();
+     //buat select2
+     public function search_pejabat($search_query) {
+        $this->db->select('id, nama');
+        $this->db->like('nama', $search_query); 
+        $this->db->limit(10);//menampilkan 10data saat load awal dan search
+        $query = $this->db->get('master_pejabat'); 
+
+        return $query->result(); 
     }
 }
 ?>

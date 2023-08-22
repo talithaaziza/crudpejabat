@@ -29,15 +29,6 @@ class M_Pejabat extends CI_Model {
         return $this->db->delete('pejabat');
     }
 
-    public function search_data($search) {
-        $this->db->select('pejabat.*, master_pejabat.nama as master_pejabat_name');
-        $this->db->from('pejabat');
-        $this->db->join('master_pejabat', 'pejabat.m_pejabat_id = master_pejabat.id', 'left');
-        $this->db->like('pejabat.nama_pejabat', $search); // Ganti 'field_name' dengan nama kolom yang ingin Anda cari
-        $query = $this->db->get(); // Ganti 'table_name' dengan nama tabel yang ingin Anda cari
-        return $query->result();
-    }
-
     public function get_data($start, $length, $search) {
         $this->db->select('pejabat.*, master_pejabat.nama AS nama_master');
         $this->db->from('pejabat');
@@ -66,5 +57,7 @@ class M_Pejabat extends CI_Model {
         $this->db->or_like('master_pejabat.nama', $search);
         return $this->db->get('pejabat')->num_rows();  
     }
+
+    
 }
 ?>
