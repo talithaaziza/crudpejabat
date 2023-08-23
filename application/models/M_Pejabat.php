@@ -16,7 +16,12 @@ class M_Pejabat extends CI_Model {
     }
 
     public function getPejabatById($id) {
-        return $this->db->get_where('pejabat', array('id' => $id))->row();
+        $this->db->select('pejabat.*, master_pejabat.nama as master_pejabat_name');
+        $this->db->from('pejabat');
+        $this->db->join('master_pejabat', 'pejabat.m_pejabat_id = master_pejabat.id', 'left');
+        $this->db->where('pejabat.id', $id);
+        $query = $this->db->get();
+        return $query->row();
     }
 
     public function updatePejabat($id, $data) {

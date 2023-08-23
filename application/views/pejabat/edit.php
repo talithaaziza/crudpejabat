@@ -33,7 +33,7 @@
                             <br>
                             <br>
                             <label for="m_pejabat_id">Jabatan:</label>
-                            <select class="form-control" name="m_pejabat_id" id="m_pejabat_id">
+                            <select id="m_pejabat_id" class="form-control" name="m_pejabat_id" >
                                 <option value="">Pilih Nama Jabatan</option>
                             </select>
 
@@ -99,6 +99,8 @@
                 },
                 minimumInputLength: 0
             });
+            var selectedOption = new Option('<?= $pejabat->master_pejabat_name ?>', '<?= $pejabat->m_pejabat_id ?>', true, true);
+            $('#m_pejabat_id').append(selectedOption).trigger('change');
     });
 </script>
 
